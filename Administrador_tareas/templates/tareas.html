@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrador de Tareas</title>
+</head>
+<body>
+    <h1>Lista de Tareas</h1>
+    <form action="/tareas/crear" method="POST">
+        <input type="text" name="titulo" placeholder="Título" required>
+        <input type="text" name="descripcion" placeholder="Descripción" required>
+        <button type="submit">Agregar Tarea</button>
+    </form>
+    <ul>
+        {% for tarea in tareas %}
+            <li>
+                <form action="/tareas/actualizar/{{ tarea['id'] }}" method="POST">
+                    <input type="checkbox" name="completada" {% if tarea['completada'] %}checked{% endif %} onchange="this.form.submit()">
+                    {{ tarea['titulo'] }} - {{ tarea['descripcion'] }}
+                </form>
+                <a href="/tareas/eliminar/{{ tarea['id'] }}">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
